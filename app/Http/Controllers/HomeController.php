@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Menu;
+use App\Role;
+use App\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $role = $user->role;
+        $menu_id = $role->menu()->pluck('menus.id')->all();
+        $menus = Menu::find($menu_id)->all();
+        $users = User::all();
+
+
+        return view('home', compact('role', 'menus', 'users',));
     }
 }
