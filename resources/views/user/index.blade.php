@@ -12,7 +12,7 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">User Table</h6>
-                <a href="/user/create" class="btn btn-icon-split btn-primary btn-sm">
+                <a href="/users/create" class="btn btn-icon-split btn-primary btn-sm">
                     <span class="icon text-white-50">
                         <i class="fas fa-plus"></i>
                     </span>
@@ -46,12 +46,16 @@
                                 <td>{{date('d M Y h:m:s', strtotime($user->created_at))}}</td>
                                 <td>{{date('d M Y h:m:s', strtotime($user->updated_at))}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-circle btn-sm btn-warning">
+                                    <a href="/users/{{$user->id}}/edit" class="btn btn-circle btn-sm btn-warning">
                                         <i class="fas fa-fw fa-pen"></i>
                                     </a>
-                                    <a href="#" class="btn btn-circle btn-sm btn-danger">
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
+                                        data-target="#exampleModal">
                                         <i class="fas fa-fw fa-trash"></i>
-                                    </a>
+                                    </button>
+
                                 </td>
                             </tr>
                             @endforeach
@@ -63,7 +67,31 @@
     </div>
 </div>
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Select "Delete" below if you want to delete this data.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="/users/{{$user->id}}" method="post" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button tyle="submit" class="btn btn-light"> Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
