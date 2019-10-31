@@ -37,4 +37,16 @@ class HomeController extends Controller
 
         return view('home', compact('role', 'menus', 'users',));
     }
+
+    public function blocked()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $menu_id = $role->menu()->pluck('menus.id')->all();
+        $menus = Menu::find($menu_id)->all();
+        $users = User::all();
+
+
+        return view('blocked', compact('role', 'menus',));
+    }
 }

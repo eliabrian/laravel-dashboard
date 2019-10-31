@@ -12,7 +12,7 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">User Table</h6>
-                <a href="#" class="btn btn-icon-split btn-primary btn-sm">
+                <a href="/user/create" class="btn btn-icon-split btn-primary btn-sm">
                     <span class="icon text-white-50">
                         <i class="fas fa-plus"></i>
                     </span>
@@ -42,7 +42,7 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->username}}</td>
-                                <td>{{$user->role->name}}</td>
+                                <td class="text-capitalize">{{$user->role->name}}</td>
                                 <td>{{date('d M Y h:m:s', strtotime($user->created_at))}}</td>
                                 <td>{{date('d M Y h:m:s', strtotime($user->updated_at))}}</td>
                                 <td>
