@@ -29,7 +29,12 @@ Route::delete('/users/{user}', 'UsersController@destroy');
 
 
 //Menu
-Route::get('/menu', 'MenuController@index');
+Route::get('/menus', 'MenusController@index');
+Route::get('/menus/create', 'MenusController@create');
+Route::post('/menus', 'MenusController@store');
+Route::get('menus/{menu}/edit', 'MenusController@edit');
+Route::patch('menus/{menu}', 'MenusController@update');
+
 
 //Middleware
 Route::get('/blocked', 'HomeController@blocked');

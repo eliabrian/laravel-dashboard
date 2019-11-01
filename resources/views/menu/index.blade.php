@@ -10,8 +10,8 @@
 
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                    aria-controls="nav-home" aria-selected="true">Menu</a>
+                <a class="nav-item nav-link active" id="nav-menu-tab" data-toggle="tab" href="#nav-menu" role="tab"
+                    aria-controls="nav-menu" aria-selected="true">Menu</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                     aria-controls="nav-profile" aria-selected="false">Submenu</a>
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
@@ -19,14 +19,14 @@
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade show active" id="nav-menu" role="tabpanel" aria-labelledby="nav-menu-tab">
 
                 <!-- Dropdown Card Example -->
                 <div class="card shadow my-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Menu Table</h6>
-                        <a href="/menu/create" class="btn btn-icon-split btn-primary btn-sm">
+                        <a href="/menus/create" class="btn btn-icon-split btn-primary btn-sm">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -56,10 +56,11 @@
                                         <td>{{date('d M Y h:m:s', strtotime($m->created_at))}}</td>
                                         <td>{{date('d M Y h:m:s', strtotime($m->updated_at))}}</td>
                                         <td>
-                                            <a href="#" class="btn btn-circle btn-sm btn-warning">
+                                            <a href="/menus/{{$m->id}}/edit"
+                                                class="btn btn-circle btn-sm btn-outline-warning">
                                                 <i class="fas fa-fw fa-pen"></i>
                                             </a>
-                                            <a href="#" class="btn btn-circle btn-sm btn-danger">
+                                            <a href="#" class="btn btn-circle btn-sm btn-outline-danger">
                                                 <i class="fas fa-fw fa-trash"></i>
                                             </a>
                                         </td>

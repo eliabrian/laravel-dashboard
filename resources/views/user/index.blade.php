@@ -46,13 +46,14 @@
                                 <td>{{date('d M Y h:m:s', strtotime($user->created_at))}}</td>
                                 <td>{{date('d M Y h:m:s', strtotime($user->updated_at))}}</td>
                                 <td>
-                                    <a href="/users/{{$user->id}}/edit" class="btn btn-circle btn-sm btn-warning">
+                                    <a href="/users/{{$user->id}}/edit"
+                                        class="btn btn-circle btn-sm btn-outline-warning">
                                         <i class="fas fa-fw fa-pen"></i>
                                     </a>
 
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal">
+                                    <button type="button" class="btn btn-outline-danger btn-circle btn-sm"
+                                        data-toggle="modal" data-target="#exampleModal">
                                         <i class="fas fa-fw fa-trash"></i>
                                     </button>
 

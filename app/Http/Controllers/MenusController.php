@@ -9,7 +9,7 @@ use App\Submenu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class MenusController extends Controller
 {
 
     public function __construct()
@@ -26,8 +26,8 @@ class MenuController extends Controller
     public function index()
     {
         //Sidebar
-        $user = Auth::user();
-        $role = $user->role;
+        $auth_user = Auth::user();
+        $role = $auth_user->role;
         $menu_id = $role->menu()->pluck('menus.id')->all();
         $menus = Menu::find($menu_id)->all();
 
@@ -43,7 +43,13 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        //Sidebar
+        $auth_user = Auth::user();
+        $role = $auth_user->role;
+        $menu_id = $role->menu()->pluck('menus.id')->all();
+        $menus = Menu::find($menu_id)->all();
+
+        return view('menu.create', compact('role', 'menus'));
     }
 
     /**
@@ -54,7 +60,20 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'icon' => ['required', 'string', 'max:255', 'starts_with:fas fa-fw'],
+        ];
+
+
+        $request->validate($rules);
+
+        Menu::create([
+            'name' => $request['name'],
+            'icon' => $request['icon'],
+        ]);
+
+        return redirect('/user')->with('status', 'Menu added!');
     }
 
     /**
@@ -74,9 +93,15 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        //
+        //Sidebar
+        $auth_user = Auth::user();
+        $role = $auth_user->role;
+        $menu_id = $role->menu()->pluck('menus.id')->all();
+        $menus = Menu::find($menu_id)->all();
+
+        return view('menu.edit', compact('role', 'menus', 'menu'));
     }
 
     /**
@@ -86,9 +111,22 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
-        //
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'icon' => ['required', 'string', 'max:255', 'starts_with:fas fa-fw'],
+        ];
+
+
+        $request->validate($rules);
+
+        Menu::where('id', $menu->id)
+            ->update([
+                'name' => $request['name'],
+                'icon' => $request['icon'],
+            ]);
+        return redirect('/menus')->with('status', 'Menu added!');
     }
 
     /**
