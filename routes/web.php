@@ -32,8 +32,9 @@ Route::delete('/users/{user}', 'UsersController@destroy');
 Route::get('/menus', 'MenusController@index');
 Route::get('/menus/create', 'MenusController@create');
 Route::post('/menus', 'MenusController@store');
-Route::get('menus/{menu}/edit', 'MenusController@edit');
-Route::patch('menus/{menu}', 'MenusController@update');
+Route::get('/menus/{menu}/edit', 'MenusController@edit');
+Route::patch('/menus/{menu}', 'MenusController@update');
+Route::delete('/menus/{menu}', 'MenusController@destroy');
 
 
 //Middleware

@@ -60,9 +60,11 @@
                                                 class="btn btn-circle btn-sm btn-outline-warning">
                                                 <i class="fas fa-fw fa-pen"></i>
                                             </a>
-                                            <a href="#" class="btn btn-circle btn-sm btn-outline-danger">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-danger btn-circle btn-sm"
+                                                data-toggle="modal" data-target="#deleteModal">
                                                 <i class="fas fa-fw fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -135,13 +137,38 @@
             </div>
 
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+
         </div>
-
-
 
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete this?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Select "Delete" below if you want to delete this data.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="/menus/{{$m->id}}" method="post" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button tyle="submit" class="btn btn-light"> Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
