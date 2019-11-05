@@ -3,21 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Menu;
-use App\Role;
 use App\Submenu;
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class MenusController extends Controller
+
+class SubmenusController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('role');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,15 +18,7 @@ class MenusController extends Controller
      */
     public function index()
     {
-        //Sidebar
-        $auth_user = Auth::user();
-        $role = $auth_user->role;
-        $menu_id = $role->menu()->pluck('menus.id')->all();
-        $menus = Menu::find($menu_id)->all();
-
-        $menu = Menu::all();
-        $sm = Submenu::all();
-        return view('menu.index', compact('role', 'menus', 'menu', 'sm'));
+        //
     }
 
     /**
@@ -49,7 +34,8 @@ class MenusController extends Controller
         $menu_id = $role->menu()->pluck('menus.id')->all();
         $menus = Menu::find($menu_id)->all();
 
-        return view('menu.create', compact('role', 'menus'));
+        $menu = Menu::all();
+        return view('submenu.create', compact('role', 'menus', 'menu'));
     }
 
     /**
@@ -60,20 +46,28 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
+        $menu_id = Menu::all()->pluck('id');
         $rules = [
             'name' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'string', 'max:255', 'starts_with:/'],
             'icon' => ['required', 'string', 'max:255', 'starts_with:fas fa-fw'],
+            'menu_id' => [
+                'required', 'string', 'max:255',
+                Rule::in($menu_id),
+            ],
         ];
 
 
         $request->validate($rules);
 
-        Menu::create([
+        Submenu::create([
             'name' => $request['name'],
+            'url' => $request['url'],
             'icon' => $request['icon'],
+            'menu_id' => $request['menu_id'],
         ]);
 
-        return redirect('/menus')->with('status', 'Menu added!');
+        return redirect('/menus')->with('status', 'Submenu added!');
     }
 
     /**
@@ -93,7 +87,7 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu)
+    public function edit(Submenu $submenu)
     {
         //Sidebar
         $auth_user = Auth::user();
@@ -101,7 +95,7 @@ class MenusController extends Controller
         $menu_id = $role->menu()->pluck('menus.id')->all();
         $menus = Menu::find($menu_id)->all();
 
-        return view('menu.edit', compact('role', 'menus', 'menu'));
+        return view('submenu.edit', compact('role', 'menus', 'submenu'));
     }
 
     /**
@@ -111,22 +105,29 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Submenu $submenu)
     {
+        $menu_id = Menu::all()->pluck('id');
         $rules = [
             'name' => ['required', 'string', 'max:255'],
+            'url' => ['required', 'string', 'max:255', 'starts_with:/'],
             'icon' => ['required', 'string', 'max:255', 'starts_with:fas fa-fw'],
+            'menu_id' => [
+                'required', 'string', 'max:255',
+                Rule::in($menu_id),
+            ],
         ];
 
 
         $request->validate($rules);
-
-        Menu::where('id', $menu->id)
+        Submenu::where('id', $submenu->id)
             ->update([
                 'name' => $request['name'],
+                'url' => $request['url'],
                 'icon' => $request['icon'],
+                'menu_id' => $request['menu_id'],
             ]);
-        return redirect('/menus')->with('status', 'Menu added!');
+        return redirect('/menus')->with('status', 'Submenu added!');
     }
 
     /**
@@ -135,9 +136,9 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function destroy(Submenu $submenu)
     {
-        Menu::destroy($menu->id);
+        Submenu::destroy($submenu->id);
         return redirect('/menus')->with('status', 'Data has been deleted!');
     }
 }

@@ -12,10 +12,8 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-menu-tab" data-toggle="tab" href="#nav-menu" role="tab"
                     aria-controls="nav-menu" aria-selected="true">Menu</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                    aria-controls="nav-profile" aria-selected="false">Submenu</a>
-                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                    aria-controls="nav-contact" aria-selected="false">Role</a>
+                <a class="nav-item nav-link" id="nav-submenu-tab" data-toggle="tab" href="#nav-submenu" role="tab"
+                    aria-controls="nav-submenu" aria-selected="false">Submenu</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -76,7 +74,7 @@
 
             </div>
 
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="tab-pane fade" id="nav-submenu" role="tabpanel" aria-labelledby="nav-submenu-tab">
 
 
                 <!-- Dropdown Card Example -->
@@ -84,7 +82,7 @@
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Submenu Table</h6>
-                        <a href="/menu/create" class="btn btn-icon-split btn-primary btn-sm">
+                        <a href="/submenus/create" class="btn btn-icon-split btn-primary btn-sm">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
@@ -118,12 +116,15 @@
                                         <td>{{date('d M Y h:m:s', strtotime($sub->created_at))}}</td>
                                         <td>{{date('d M Y h:m:s', strtotime($sub->updated_at))}}</td>
                                         <td>
-                                            <a href="#" class="btn btn-circle btn-sm btn-warning">
+                                            <a href="/submenus/{{$sub->id}}/edit"
+                                                class="btn btn-circle btn-sm btn-outline-warning">
                                                 <i class="fas fa-fw fa-pen"></i>
                                             </a>
-                                            <a href="#" class="btn btn-circle btn-sm btn-danger">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-danger btn-circle btn-sm"
+                                                data-toggle="modal" data-target="#subDeleteModal">
                                                 <i class="fas fa-fw fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -135,8 +136,6 @@
 
 
             </div>
-
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
 
         </div>
 
@@ -170,6 +169,32 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="subDeleteModal" tabindex="-1" role="dialog" aria-labelledby="subDeleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subDeleteModalLabel">Are you sure you want to delete this?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Select "Delete" below if you want to delete this data.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="/submenus/{{$sub->id}}" method="post" class="d-inline">
+                    @method('delete')
+                    @csrf
+                    <button tyle="submit" class="btn btn-light"> Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection

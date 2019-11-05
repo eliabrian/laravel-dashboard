@@ -67,7 +67,7 @@
 
                                 @php
                                 $submenus = DB::table('submenus')->where('menu_id',
-                                $menu->id)->orderBy('name','asc')->get();
+                                $menu->id)->whereNull('deleted_at')->orderBy('name','asc')->get();
                                 @endphp
 
                                 @foreach ($submenus as $submenu)

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'New User')
+@section('title', 'New Menu')
 
 @section('content')
-<h1 class="h3 mb-4 text-gray-800">New User</h1>
+<h1 class="h3 mb-4 text-gray-800">New Menu</h1>
 
 
 <div class="row">
